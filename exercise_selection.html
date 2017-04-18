@@ -28,7 +28,8 @@
 			<div class="jumbotron">
 				<h1>
 				</h1>
-				<p>
+            <div class="panel-body">
+                <p>
                 难度系数：
                     {% for i in question.difficulty_1 %}  <!-- 试题难度 -->
                         <span>
@@ -48,28 +49,40 @@
                 <p>
                     {% autoescape off %}{{ question.description }}{% endautoescape %} <!-- 题目 -->
                 </p>
-                <button id="show_hide" class="btn active btn-default">答案</button>
+
+            </div>
+
+            <div class="panel-footer">
+                 <button id="show_hide" class="btn active btn-default">答案</button>
                 <div id="answer">
                 <p id="p1">
                     {% autoescape off %}{{ question.answer }}{% endautoescape %} <!-- 答案 -->
                 </p>
+            </div>
+
 			</div>
             </div>
-    			<div class="btn-group btn-group-lg ">
-				<button class="btn btn-danger "  type="button">
-				<em class="glyphicon glyphicon-thumbs-up"></em>  困难
-				</button> 
-				<button class="btn btn-warning" type="button">
-				<em class="glyphicon glyphicon-hand-up"></em> 中等
-				</button> <button class="btn btn-success" type="button">
-				<em class="glyphicon glyphicon-thumbs-down"></em>  容易
-				</button> <button class="btn btn-default" type="button">
-				<em class="glyphicon glyphicon-trash"></em> 斩杀
-				</button>
-                <button class="btn btn-default" type="button">
-				<em class="glyphicon glyphicon-remove-sign"></em> 做错啦
-				</button>
-			</div>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <div class="btn-group btn-group-lg ">
+                    <input name="chapter_id" hidden value={{ question.chapter_id }}></input>
+                    <input name="question_id" hidden value={{ question.question_id}}></input>
+                    <button class="btn btn-danger "  type="submit" name="difficulty" value=3>
+                        <em class="glyphicon glyphicon-thumbs-up"></em>  困难
+                    </button>
+                    <button class="btn btn-warning" type="submit" name="difficulty" value=2>
+                        <em class="glyphicon glyphicon-hand-up"></em> 中等
+                    </button> <button class="btn btn-success" type="submit" name="difficulty" value=1>
+                    <em class="glyphicon glyphicon-thumbs-down"></em>  容易
+                </button> <button class="btn btn-default" type="submit" name="cut" value='cut'>
+                    <em class="glyphicon glyphicon-trash"></em> 斩杀
+                </button>
+                    <button class="btn btn-default" type="submit" name="wrong" value="wrong">
+                        <em class="glyphicon glyphicon-remove-sign"></em> 做错啦
+                    </button>
+                </div>
+            </form>
 		</div>
 	</div>
 </div>
